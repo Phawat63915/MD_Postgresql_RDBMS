@@ -7,14 +7,14 @@
 ```bash
 sudo apt-cache search postgresql | grep postgresql
 ```
-2. Setup PostgreSQL 15 Package Repository (หากไม่มีให้เพิ่มเข้าไป)
+2. Add PostgreSQL Package Repository (หากไม่มีให้เพิ่มเข้าไป)
 ```bash
 sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
 ```
-```
+```bash
 wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null
 ```
-```
+```bash
 sudo apt update -y
 ```
 **Step 2: Install PostgreSQL 15 Database Server and Client**
@@ -161,19 +161,27 @@ sudo apt install postgresql-1.0 postgresql-client-1.0 -y
 
 </details>
 
-<!-- ```bash
+**Step 3: Start PostgreSQL Database Server**
+
+```bash
 sudo systemctl enable postgresql
 sudo systemctl start postgresql
 ```
+
+**Step 4: Check PostgreSQL Database Server Status**
+
 ```bash
 systemctl status postgresql
 ```
+
+**Step 5: Check PostgreSQL Version**
 ```bash
 sudo -u postgres psql -c "SELECT version();"
 ```
+OR:
 ```bash
 psql --version
-``` -->
+```
 
 ### Uninstall
 ```bash
