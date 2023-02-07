@@ -359,7 +359,7 @@ sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-
 sudo dnf -qy module disable postgresql
 ```
 
-**Step 2: Install PostgreSQL 15 Database Server and Client Select a version next step**
+**Step 2: Install PostgreSQL 15 Database Server and (Select a version to Next Step)**
 
 <details><summary>(15.1) Latest Version </summary>
 
@@ -501,7 +501,7 @@ sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-
 sudo dnf -qy module disable postgresql
 ```
 
-**Step 2: Install PostgreSQL 15 Database Server and Client Select a version next step**
+**Step 2: Install PostgreSQL 15 Database Server and (Select a version to Next Step)**
 
 <details><summary>(15.1) Latest Version </summary>
 
@@ -654,9 +654,7 @@ sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/F-36-
 </details>
 
 
-**Step 2: Install PostgreSQL 15 Database Server and Client **
-
-Select a version next step
+**Step 2: Install PostgreSQL 15 Database Server and Client (Select a version to Next Step)**
 
 <details><summary>(15.1) Latest Version </summary>
 
