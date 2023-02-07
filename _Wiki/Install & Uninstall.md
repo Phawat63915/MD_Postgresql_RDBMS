@@ -7,6 +7,8 @@ Operating system
 - [Red Hat Enterprise, CentOS 7, Scientific or Oracle version 6](#red-hat-enterprise-centos-scientific-or-oracle-version-6)
 - [Fedora version 37, 36](#fedora-version-37-36)
 
+> **Tip:** หากต้องการติดตั้ง PostgreSQL ในระบบปฏิบัติการอื่นๆ สามารถดูได้ที่ [PostgreSQL Download](https://www.postgresql.org/download/) หรือ [PostgreSQL Wiki](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
+
 ## Ubuntu 22.04 LTS, 20.04 LTS, 18.04 LTS and Debian 11, 10, 9
 
 - Ubuntu 22.04 LTS
