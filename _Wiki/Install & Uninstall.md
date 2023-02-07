@@ -1,4 +1,11 @@
-# 
+# List How to Install & Uninstall
+
+Operating system
+- [Ubuntu 22.04 LTS, 20.04 LTS, 18.04 LTS and Debian 11, 10, 9](#ubuntu-2204-lts-2004-lts-1804-lts-and-debian-11-10-9)
+- [Red Hat Enterprise, Rocky, or Oracle version 9, 8](#red-hat-enterprise-rocky-or-oracle-version-9-8)
+- [Red Hat Enterprise, CentOS 6, Scientific or Oracle version 7](#red-hat-enterprise-centos-scientific-or-oracle-version-7)
+- [Red Hat Enterprise, CentOS 7, Scientific or Oracle version 6](#red-hat-enterprise-centos-scientific-or-oracle-version-6)
+- [Fedora version 37, 36](#fedora-version-37-36)
 
 ## Ubuntu 22.04 LTS, 20.04 LTS, 18.04 LTS and Debian 11, 10, 9
 
