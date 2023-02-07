@@ -1,7 +1,6 @@
+## Ubuntu
 
-### Ubuntu
-
-#### Install
+### Install
 
 **Step 1: Enable PostgreSQL 15 Package Repository**
 1. เช็คว่ามี PostgreSQL Package ว่าเป็นเวอร์ชั้นที่เราต้องการหรือไม่
@@ -179,7 +178,7 @@ sudo -u postgres psql -c "SELECT version();"
 psql --version
 ``` -->
 
-### Uninstall
+## Uninstall
 ```bash
 sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/
 ```
