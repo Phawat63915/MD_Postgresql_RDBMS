@@ -25,6 +25,7 @@ Latest Version (15.1)
 sudo apt install postgresql postgresql-client -y
 ```
 <details><summary>Other version (1-14)</summary>
+
 15.0
 ```bash
 sudo apt install postgresql-15 postgresql-client-15 -y
@@ -161,6 +162,7 @@ sudo apt install postgresql-2.0 postgresql-client-2.0 -y
 ```bash
 sudo apt install postgresql-1.0 postgresql-client-1.0 -y
 ```
+
 </details>
 
 <!-- ```bash
