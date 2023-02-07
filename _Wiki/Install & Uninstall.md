@@ -317,7 +317,6 @@ systemctl status postgresql-11
 ```
 
 </details>
-<br>
 
 **Step 5: Check PostgreSQL Version**
 ```bash
