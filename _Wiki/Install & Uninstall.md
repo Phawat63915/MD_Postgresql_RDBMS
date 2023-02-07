@@ -200,7 +200,7 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 **Step 1: Enable PostgreSQL 15 Package Repository**
 1. Add PostgreSQL Package Repository (หากไม่มีให้เพิ่มเข้าไป)
 
-<details><summary>Red Hat Enterprise, Rocky, or Oracle version 9</summary>
+<details><summary>Red Hat Enterprise, Rocky, or Oracle 9</summary>
 
 ```bash
 sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
@@ -208,7 +208,7 @@ sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-
 
 </details>
 
-<details><summary>Red Hat Enterprise, Rocky, or Oracle version 8</summary>
+<details><summary>Red Hat Enterprise, Rocky, or Oracle 8</summary>
 
 ```bash
 sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
@@ -353,10 +353,7 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 **Step 1: Enable PostgreSQL 15 Package Repository**
 1. Add PostgreSQL Package Repository (หากไม่มีให้เพิ่มเข้าไป)
 ```bash
-sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-```
-```bash
-sudo dnf -qy module disable postgresql
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 ```
 
 **Step 2: Install PostgreSQL 15 Database Server and (Select a version to Next Step)**
@@ -364,7 +361,7 @@ sudo dnf -qy module disable postgresql
 <details><summary>(15.1) Latest Version </summary>
 
 ```bash
-sudo dnf install -y postgresql15-server postgresql15-client
+sudo yum install -y postgresql15-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
@@ -386,7 +383,7 @@ systemctl status postgresql-15
 <details><summary>(14.0) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql14-server postgresql14-client
+sudo yum install -y postgresql14-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
@@ -408,7 +405,7 @@ systemctl status postgresql-14
 <details><summary>(13.4) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql13-server postgresql13-client
+sudo yum install -y postgresql13-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
@@ -430,7 +427,7 @@ systemctl status postgresql-13
 <details><summary>(12.8) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql12-server postgresql12-client
+sudo yum install -y postgresql12-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
@@ -452,7 +449,7 @@ systemctl status postgresql-12
 <details><summary>(11.13) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql11-server postgresql11-client
+sudo yum install -y postgresql11-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
@@ -470,6 +467,7 @@ systemctl status postgresql-11
 ```
 
 </details>
+
 
 **Step 5: Check PostgreSQL Version**
 ```bash
@@ -495,10 +493,7 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 **Step 1: Enable PostgreSQL 15 Package Repository**
 1. Add PostgreSQL Package Repository (หากไม่มีให้เพิ่มเข้าไป)
 ```bash
-sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-```
-```bash
-sudo dnf -qy module disable postgresql
+sudo yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-6-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 ```
 
 **Step 2: Install PostgreSQL 15 Database Server and (Select a version to Next Step)**
@@ -506,15 +501,15 @@ sudo dnf -qy module disable postgresql
 <details><summary>(15.1) Latest Version </summary>
 
 ```bash
-sudo dnf install -y postgresql15-server postgresql15-client
+sudo yum install -y postgresql15-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
 
 ```bash
-sudo /usr/pgsql-15/bin/postgresql-15-setup initdb
-sudo systemctl enable postgresql-15
-sudo systemctl start postgresql-15
+sudo service postgresql-15 initdb
+sudo chkconfig postgresql-15 on
+sudo service postgresql-15 start
 ```
 
 **Step 4: Check PostgreSQL Database Server Status**
@@ -528,15 +523,15 @@ systemctl status postgresql-15
 <details><summary>(14.0) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql14-server postgresql14-client
+sudo yum install -y postgresql14-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
 
 ```bash
-sudo /usr/pgsql-14/bin/postgresql-14-setup initdb
-sudo systemctl enable postgresql-14
-sudo systemctl start postgresql-14
+sudo service postgresql-14 initdb
+sudo chkconfig postgresql-14 on
+sudo service postgresql-14 start
 ```
 
 **Step 4: Check PostgreSQL Database Server Status**
@@ -550,15 +545,15 @@ systemctl status postgresql-14
 <details><summary>(13.4) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql13-server postgresql13-client
+sudo yum install -y postgresql13-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
 
 ```bash
-sudo /usr/pgsql-13/bin/postgresql-13-setup initdb
-sudo systemctl enable postgresql-13
-sudo systemctl start postgresql-13
+sudo service postgresql-13 initdb
+sudo chkconfig postgresql-13 on
+sudo service postgresql-13 start
 ```
 
 **Step 4: Check PostgreSQL Database Server Status**
@@ -572,15 +567,15 @@ systemctl status postgresql-13
 <details><summary>(12.8) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql12-server postgresql12-client
+sudo yum install -y postgresql12-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
 
 ```bash
-sudo /usr/pgsql-12/bin/postgresql-12-setup initdb
-sudo systemctl enable postgresql-12
-sudo systemctl start postgresql-12
+sudo service postgresql-12 initdb
+sudo chkconfig postgresql-12 on
+sudo service postgresql-12 start
 ```
 
 **Step 4: Check PostgreSQL Database Server Status**
@@ -594,15 +589,15 @@ systemctl status postgresql-12
 <details><summary>(11.13) Old Version </summary>
 
 ```bash
-sudo dnf install -y postgresql11-server postgresql11-client
+sudo yum install -y postgresql11-server
 ```
 
 **Step 3: Start PostgreSQL Database Server**
 
 ```bash
-sudo /usr/pgsql-11/bin/postgresql-11-setup initdb
-sudo systemctl enable postgresql-11
-sudo systemctl start postgresql-11
+sudo service postgresql-11 initdb
+sudo chkconfig postgresql-11 on
+sudo service postgresql-11 start
 ```
 
 **Step 4: Check PostgreSQL Database Server Status**
