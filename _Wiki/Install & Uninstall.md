@@ -9,6 +9,13 @@ Operating system
 
 ## Ubuntu 22.04 LTS, 20.04 LTS, 18.04 LTS and Debian 11, 10, 9
 
+- Ubuntu 22.04 LTS
+- Ubuntu 20.04 LTS
+- Ubuntu 18.04 LTS
+- Debian 11
+- Debian 10
+- Debian 9
+
 ### Install
 
 **Step 1: Enable PostgreSQL 15 Package Repository**
@@ -202,6 +209,13 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 
 ## Red Hat Enterprise, Rocky, or Oracle version 9, 8
 
+- Red Hat Enterprise Linux 9
+- Rocky Linux 9
+- Oracle Linux 9
+- Red Hat Enterprise Linux 8
+- Rocky Linux 8
+- Oracle Linux 8
+
 ### Install
 
 **Step 1: Enable PostgreSQL 15 Package Repository**
@@ -355,6 +369,11 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 
 ## Red Hat Enterprise, CentOS, Scientific or Oracle version 7
 
+- Red Hat Enterprise Linux 7
+- CentOS 7
+- Scientific Linux 7
+- Oracle Linux 7
+
 ### Install
 
 **Step 1: Enable PostgreSQL 15 Package Repository**
@@ -495,6 +514,11 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 
 ## Red Hat Enterprise, CentOS, Scientific or Oracle version 6
 
+- Red Hat Enterprise Linux 6
+- CentOS 6
+- Scientific Linux 6
+- Oracle Linux 6
+
 ### Install
 
 **Step 1: Enable PostgreSQL 15 Package Repository**
@@ -633,6 +657,9 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 
 
 ## Fedora version 37, 36
+
+- Fedora version 37
+- Fedora version 36
 
 ### Install
 
