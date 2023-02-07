@@ -22,7 +22,9 @@ sudo apt update -y
 ```bash
 sudo apt install postgresql postgresql-client -y
 ```
-```bash
+
+
+<!-- ```bash
 sudo systemctl enable postgresql
 sudo systemctl start postgresql
 ```
@@ -34,7 +36,7 @@ sudo -u postgres psql -c "SELECT version();"
 ```
 ```bash
 psql --version
-```
+``` -->
 
 # Uninstall
 ```bash
