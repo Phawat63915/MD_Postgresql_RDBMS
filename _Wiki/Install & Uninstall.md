@@ -199,9 +199,23 @@ sudo apt-get --purge remove postgresql postgresql-* -y && sudo rm -rf /var/lib/p
 
 **Step 1: Enable PostgreSQL 15 Package Repository**
 1. Add PostgreSQL Package Repository (หากไม่มีให้เพิ่มเข้าไป)
+
+<details><summary>Red Hat Enterprise, Rocky, or Oracle version 9</summary>
+
 ```bash
 sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-9-x86_64/pgdg-redhat-repo-latest.noarch.rpm
 ```
+
+</details>
+
+<details><summary>Red Hat Enterprise, Rocky, or Oracle version 8</summary>
+
+```bash
+sudo dnf install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+```
+
+</details>
+
 ```bash
 sudo dnf -qy module disable postgresql
 ```
