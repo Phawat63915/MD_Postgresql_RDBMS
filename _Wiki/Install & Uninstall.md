@@ -20,6 +20,7 @@ sudo apt update -y
 **Step 2: Install PostgreSQL 15 Database Server and Client**
 
 <h4>Latest Version (15.1)</h4>
+
 ```bash
 sudo apt install postgresql postgresql-client -y
 ```
