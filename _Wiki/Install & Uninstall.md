@@ -17,9 +17,9 @@ wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt
 ```
 sudo apt update -y
 ```
-**<h3>Step 2: Install PostgreSQL 15 Database Server and Client<h3>**
+**Step 2: Install PostgreSQL 15 Database Server and Client**
 
-Latest Version (15.1)
+<h4>Latest Version (15.1)</h4>
 ```bash
 sudo apt install postgresql postgresql-client -y
 ```
