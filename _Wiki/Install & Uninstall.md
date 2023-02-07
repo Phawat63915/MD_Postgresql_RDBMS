@@ -26,10 +26,6 @@ sudo apt install postgresql postgresql-client -y
 ```
 <details><summary>Other version (1-14)</summary>
 
-(15.0)
-```bash
-sudo apt install postgresql-15 postgresql-client-15 -y
-```
 (14.0)
 ```bash
 sudo apt install postgresql-14 postgresql-client-14 -y
