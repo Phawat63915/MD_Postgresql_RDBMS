@@ -19,146 +19,146 @@ sudo apt update -y
 ```
 **Step 2: Install PostgreSQL 15 Database Server and Client**
 
-<h4>Latest Version (15.1)</h4>
+Latest Version (15.1)
 
 ```bash
 sudo apt install postgresql postgresql-client -y
 ```
 <details><summary>Other version (1-14)</summary>
 
-15.0
+(15.0)
 ```bash
 sudo apt install postgresql-15 postgresql-client-15 -y
 ```
-14.0
+(14.0)
 ```bash
 sudo apt install postgresql-14 postgresql-client-14 -y
 ```
-13.4
+(13.4)
 ```bash
 sudo apt install postgresql-13 postgresql-client-13 -y
 ```
-12.8
+(12.8)
 ```bash
 sudo apt install postgresql-12 postgresql-client-12 -y
 ```
-11.13
+(11.13)
 ```bash
 sudo apt install postgresql-11 postgresql-client-11 -y
 ```
-10.18
+(10.18)
 ```bash
 sudo apt install postgresql-10 postgresql-client-10 -y
 ```
-9.6.23
+(9.6.23)
 ```bash
 sudo apt install postgresql-9.6 postgresql-client-9.6 -y
 ```
-9.5.27
+(9.5.27)
 ```bash
 sudo apt install postgresql-9.5 postgresql-client-9.5 -y
 ```
-9.4.32
+(9.4.32)
 ```bash
 sudo apt install postgresql-9.4 postgresql-client-9.4 -y
 ```
-9.3.27
+(9.3.27)
 ```bash
 sudo apt install postgresql-9.3 postgresql-client-9.3 -y
 ```
-9.2.24
+(9.2.24)
 ```bash
 sudo apt install postgresql-9.2 postgresql-client-9.2 -y
 ```
-9.1.24
+(9.1.24)
 ```bash
 sudo apt install postgresql-9.1 postgresql-client-9.1 -y
 ```
-9.0.24
+(9.0.24)
 ```bash
 sudo apt install postgresql-9.0 postgresql-client-9.0 -y
 ```
-8.4.23
+(8.4.23)
 ```bash
 sudo apt install postgresql-8.4 postgresql-client-8.4 -y
 ```
-8.3.23
+(8.3.23)
 ```bash
 sudo apt install postgresql-8.3 postgresql-client-8.3 -y
 ```
-8.2.23
+(8.2.23)
 ```bash
 sudo apt install postgresql-8.2 postgresql-client-8.2 -y
 ```
-8.1.23
+(8.1.23)
 ```bash
 sudo apt install postgresql-8.1 postgresql-client-8.1 -y
 ```
-8.0.23
+(8.0.23)
 ```bash
 sudo apt install postgresql-8.0 postgresql-client-8.0 -y
 ```
-7.4.25
+(7.4.25)
 ```bash
 sudo apt install postgresql-7.4 postgresql-client-7.4 -y
 ```
-7.3.26
+(7.3.26)
 ```bash
 sudo apt install postgresql-7.3 postgresql-client-7.3 -y
 ```
-7.2.5
+(7.2.5)
 ```bash
 sudo apt install postgresql-7.2 postgresql-client-7.2 -y
 ```
-7.1.5
+(7.1.5)
 ```bash
 sudo apt install postgresql-7.1 postgresql-client-7.1 -y
 ```
-7.0.5
+(7.0.5)
 ```bash
 sudo apt install postgresql-7.0 postgresql-client-7.0 -y
 ```
-6.5.5
+(6.5.5)
 ```bash
 sudo apt install postgresql-6.5 postgresql-client-6.5 -y
 ```
-6.4.5
+(6.4.5)
 ```bash
 sudo apt install postgresql-6.4 postgresql-client-6.4 -y
 ```
-6.3.5
+(6.3.5)
 ```bash
 sudo apt install postgresql-6.3 postgresql-client-6.3 -y
 ```
-6.2.5
+(6.2.5)
 ```bash
 sudo apt install postgresql-6.2 postgresql-client-6.2 -y
 ```
-6.1.5
+(6.1.5)
 ```bash
 sudo apt install postgresql-6.1 postgresql-client-6.1 -y
 ```
-6.0.5
+(6.0.5)
 ```bash
 sudo apt install postgresql-6.0 postgresql-client-6.0 -y
 ```
-5.0.5
+(5.0.5)
 ```bash
 sudo apt install postgresql-5.0 postgresql-client-5.0 -y
 ```
-4.4.5
+(4.4.5)
 ```bash
 sudo apt install postgresql-4.0 postgresql-client-4.0 -y
 ```
-4.3.5
+(3.3.5)
 ```bash
 sudo apt install postgresql-3.0 postgresql-client-3.0 -y
 ```
-4.2.5
+(2.2.5)
 ```bash
 sudo apt install postgresql-2.0 postgresql-client-2.0 -y
 ```
-4.1.5
+(1.1.5)
 ```bash
 sudo apt install postgresql-1.0 postgresql-client-1.0 -y
 ```
