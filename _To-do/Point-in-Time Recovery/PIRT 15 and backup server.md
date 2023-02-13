@@ -73,9 +73,12 @@ sudo systemctl restart postgresql@15-main.service
 - **16:30:00** เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
 
 ช่วงเวลาหลังจากฐานข้อมูลถูกทำลาย
-- **24:00:00** เราจะทำการกู้ข้อมูล โดยใช้ Point in Time Recovery ในช่วงเวลา 15:00:00 และ 15:30:00 และ 16:00:00 เราสามารถย้อนไปกู้ข้อมูลได้ ซึ่งในครั้งนี้เราเราจะย้อนไป เวลา 15:30:00 ซึ่งขณะนั้นข้อมูลเราจะกลับมาเป็น 20 แถว เป็นต้น (โดยเราจะเอา BackUp แบบ Full BackUp มาใช้รวมกับ WAL ที่เก็บไว้ใน directory wal_archive ในการกู้ข้อมูล)
+- **23:00:00** เราจะทำการกู้ข้อมูล โดยใช้ Point in Time Recovery ซึ่งช่วงเวลา 15:00:00 และ 15:30:00 และ 16:00:00 เราสามารถย้อนไปกู้ข้อมูลได้ ซึ่งในครั้งนี้เราเราจะย้อนไป เวลา 15:30:00 ซึ่งขณะนั้นข้อมูลเราจะกลับมาเป็น 20 แถว (โดยเราจะเอา BackUp แบบ Full BackUp มาใช้รวมกับ WAL ที่เก็บไว้ใน directory wal_archive ในมารวมกันการกู้ข้อมูล)
 
-## **15:00:00**
+> **Tip:** โดยในแต่ละช่วงเวลา เราจะ sql `select now();` เพื่อเช็กเวลาของแต่ละช่วงของเราว่าเรากำลังทำการทดสอบในช่วงเวลาใด โปรดจดเอาไว้
+
+
+## **15:00:00** (ช่วง 1)
 #### 1.Connect to PostgreSQL Server
 เปลี่ยน user Unix เป็น user postgres
 ```bash
@@ -117,49 +120,77 @@ SELECT pg_switch_wal();
 
 
 
-
+```bash
 rm -rf /var/lib/postgresql/basebackup/*
-
+```
+```bash
 pg_basebackup -D /var/lib/postgresql/basebackup -Ft -P
+```
 
 
-
-
+## **15:30:00** (ช่วง 2)
+```sql psql command
 \c test_db1;
+```
+```sql
 insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
 select count(1) from test_tbl1; /* 20  */
-# select now(); /* restore point  2021-09-23 11:03:25 */
+```
+<!-- select now(); /* restore point  2021-09-23 11:03:25 */ -->
 
-select now();  /* restore point  2023-02-12 15:04:30 */
+```sql
+select now();  
+-- /* restore point  2023-02-12 15:04:30 */
+```
 
 
-
-
+## **16:00:00** (ช่วง 3)
+```sql
 insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
 select count(1) from test_tbl1; /* 30 recoreds */
+```
+
+```sql
 select now();  
+```
 
-# 2023-02-12 15:05:15
 
-#  sudo systemctl stop postgresql-15
+
+## **16:30:00** (ช่วง 4)
+<!-- 2023-02-12 15:05:15 -->
+
+<!-- sudo systemctl stop postgresql-15 -->
+```bash
 sudo systemctl stop postgresql@15-main.service
-
+```
+```bash
 sudo su - postgres
+```
+```bash
 rm -rf /var/lib/postgresql/15/main/*
+```
+
+## **23:00:00** (ช่วง 5)
+```bash
 mkdir /var/lib/postgresql/15/main/pg_wal
+```
 
-
+```bash
 tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
-#no need to restore wal file
-# 2021-09-23 09:36:21
-2023-02-12 15:04:30
+```
+
+<!-- #no need to restore wal file -->
+<!-- 2021-09-23 09:36:21 -->
+<!-- 2023-02-12 15:04:30 -->
 
 
 
-sudo su - postgres 
+<!-- sudo su - postgres  -->
+```bash
 vi /var/lib/postgresql/15/main/recovery.signal 
+```
 restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p' 
 recovery_target_time = '2023-02-12 15:04:30' 
 
@@ -172,7 +203,7 @@ sudo systemctl start postgresql@15-main.service
 sudo systemctl stop postgresql@15-main.service
 sudo systemctl restart postgresql@15-main.service
 
-# recovery_target_time = '2021-09-23 11:03:25' 
+<!-- recovery_target_time = '2021-09-23 11:03:25'  -->
 
 
 select pg_wal_replay_resume();
