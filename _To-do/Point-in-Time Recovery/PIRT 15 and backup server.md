@@ -151,7 +151,7 @@ psql
 ```sql psql command
 \c test_db1;
 ```
-
+เพิ่มข้อมูลลงไป 10 แถว และเช็คจำนวนข้อมูลที่เรา insert ลงไปได้ด้วยคำสั่ง `select count(1) from test_tbl1;`
 ```sql
 insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
@@ -159,6 +159,9 @@ select count(1) from test_tbl1; /* 20  */
 ```
 <!-- select now(); /* restore point  2021-09-23 11:03:25 */ -->
 
+
+
+>>>>>> <h1>Restore point</h1>
 ```sql
 select now();  
 -- /* restore point  2023-02-12 15:04:30 */
