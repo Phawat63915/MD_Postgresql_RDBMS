@@ -161,9 +161,10 @@ select count(1) from test_tbl1; /* 20  */
 
 
 
->>>>>> <h1>Restore point</h1>
+>>>>>> <h1>Restore point</h1> ช่วงเวลาที่ 2
+ในส่วนนี้จะเป็นส่วนสำคัญเลย เพราะเราจะจดเวลาที่เราจะย้อนมาที่เวลานี้ ด้วยคำสั่ง `select now();`
 ```sql
-select now();  
+select now();
 -- /* restore point  2023-02-12 15:04:30 */
 ```
 
