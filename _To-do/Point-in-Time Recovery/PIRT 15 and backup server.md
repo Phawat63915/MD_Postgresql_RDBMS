@@ -64,13 +64,20 @@ sudo systemctl restart postgresql@15-main.service
 
 ตามขั้นตอนดังต่อไปนี้จะเป็นการยกตัวอย่างการทำ Point in Time Recovery 
 
-โดย
-- สร้าง Database ชื่อ `test_db1` และ Table ชื่อ `test_table1` และ Insert ข้อมูลลงไป
-- สร้าง Database ชื่อ `test_db2` และ Table ชื่อ `test_table2` และ Insert ข้อมูลลงไป
+โดย เราจะสร้าง Database ชื่อ `test_db1` และสร้าง table ชื่อ `test_table1` และใส่ข้อมูลลงไป และทำการ backup ข้อมูล ลงไป ประมาณ 3 ช่วงเวลา หรือ 3
+
+โดยจะยกตัวอย่าง 4 ช่วงเวลา ดังนี้ (ช่วงเวล่จะเป็นช่วงเวลาทางการ)
+- **15:00:00** เราจะทำการเพิ่มข้อมูลลงไป 10 แถว และทำการ backup ข้อมูล แบบ `pg_basebackup` หรือ แบบ Full Backup ลงไป ใน directory basebackup โดยใสนช่วงเวลาต่อไปเราจะไม่ได้ backup เลย
+- **15:30:00** เพิ่มข้อมูล 10 แถว ดังนั้นข้อมูลทั้งหมดจะมี 20 แถว
+- **16:00:00** เพิ่มข้อมูล 10 แถว ดังนั้นข้อมูลทั้งหมดจะมี 30 แถว
+- **16:30:00** เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
+
+ช่วงเวลาหลังจากฐานข้อมูลถูกทำลาย
+- **24:00:00** เราจะทำการกู้ข้อมูล โดยใช้ Point in Time Recovery ในช่วงเวลา 15:00:00 และ 15:30:00 และ 16:00:00 เราสามารถย้อนไปกู้ข้อมูลได้ ซึ่งในครั้งนี้เราเราจะย้อนไป เวลา 15:30:00 ซึ่งขณะนั้นข้อมูลเราจะกลับมาเป็น 20 แถว เป็นต้น (โดยเราจะเอา BackUp แบบ Full BackUp มาใช้รวมกับ WAL ที่เก็บไว้ใน directory wal_archive ในการกู้ข้อมูล)
 
 
 #### 1.Connect to PostgreSQL Server
-เปลี่ยน user unix เป็น user postgres
+เปลี่ยน user Unix เป็น user postgres
 ```bash
 sudo su - postgres
 ```
@@ -95,7 +102,7 @@ select count(1) from test_tbl1; - 10
 select now();
 SELECT pg_switch_wal();
 
-# 2023-02-12 15:00:01.711004+00
+-- # 2023-02-12 15:00:01.7 11004+00
 
 
 rm -rf /var/lib/postgresql/basebackup/*
