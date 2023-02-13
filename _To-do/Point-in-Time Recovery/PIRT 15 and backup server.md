@@ -79,6 +79,9 @@ sudo systemctl restart postgresql@15-main.service
 
 
 ## **15:00:00** (ช่วง 1)
+
+> **Note:** โดยช่วงเวลานี้เราจะทำการเพิ่มข้อมูลลงไป 10 แถว และทำการ backup ข้อมูล แบบ `pg_basebackup` หรือ แบบ Full Backup ลงไป ใน directory basebackup โดยใสนช่วงเวลาต่อไปเราจะไม่ได้ backup เลย
+
 #### 1.Connect to PostgreSQL Server
 เปลี่ยน user Unix เป็น user postgres
 ```bash
@@ -114,6 +117,7 @@ select count(1) from test_tbl1; - 10
 select now();
 -- 2023-02-12 15:00:01.7 11004+00
 ```
+Archive WAL ไว้ใน directory wal_archive
 ```sql psql function command PIRT
 SELECT pg_switch_wal();
 ```
@@ -129,6 +133,9 @@ pg_basebackup -D /var/lib/postgresql/basebackup -Ft -P
 
 
 ## **15:30:00** (ช่วง 2)
+
+> **Note:** เพิ่มข้อมูล 10 แถว ดังนั้นข้อมูลทั้งหมดจะมี 20 แถว
+
 ```sql psql command
 \c test_db1;
 ```
@@ -146,6 +153,10 @@ select now();
 
 
 ## **16:00:00** (ช่วง 3)
+
+> **Note:** เพิ่มข้อมูล 10 แถว ดังนั้นข้อมูลทั้งหมดจะมี 30 แถว
+
+
 ```sql
 insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
@@ -156,9 +167,11 @@ select count(1) from test_tbl1; /* 30 recoreds */
 select now();  
 ```
 
-
-
 ## **16:30:00** (ช่วง 4)
+
+> Note: เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
+
+
 <!-- 2023-02-12 15:05:15 -->
 
 <!-- sudo systemctl stop postgresql-15 -->
@@ -173,6 +186,9 @@ rm -rf /var/lib/postgresql/15/main/*
 ```
 
 ## **23:00:00** (ช่วง 5)
+
+> Note: เราจะทำการ Restore Database กลับมาในช่วง 2 โดยใช้ข้อมูลที่เราได้ทำการ Full Backup ไว้ในช่วง 1 มาต่อ กัน กับ Wal_log ที่เราได้ทำการ Archive ไว้ในช่วง 1 มาต่อ กัน
+
 ```bash
 mkdir /var/lib/postgresql/15/main/pg_wal
 ```
