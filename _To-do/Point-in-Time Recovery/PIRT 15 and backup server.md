@@ -1,13 +1,11 @@
 # Point-in-Time Recovery Postgres 15 and backup server
 
-
-
-# Manual
 ในคู่มือนี้นี้เราจะทำการสำรองข้อมูล Postgres 15 และทำการ Restore ข้อมูลกลับมาในเวลาที่กำหนดไว้
-# Setup
+
+# Manual Setup
 
 > **Note:** ส่วนของการติดตั้ง Postgres 15 และการตั้งค่าให้สามารถทำ Point-in-Time Recovery ได้
-
+## Install Postgres 15 and Setup
 #### 1. Install Postgres 15
 ลงบนเครื่อง
 ```bash
@@ -24,6 +22,7 @@ sudo su - postgres
 mkdir basebackup && mkdir wal_archive && ls && pwd
 ```
 เน้นย้ำว่าต้องเป็น user postgres ที่สร้าง Folder นี้
+
 ออกจาก user postgres โดยใช้คำสั่ง
 ```bash
 exit
@@ -37,7 +36,7 @@ sudo vi /etc/postgresql/15/main/postgresql.conf
 ```
 โดยหลังจากที่เรา เข้ามาที่ ไฟล์ config แล้วเราจะพบกับ config มากมาย แต่เราจะเลือก config ที่เราต้องการเปลี่ยนค่า โดยในที่นี้เราจะเปลี่ยนค่าในส่วนของ `wal_level`, `archive_mode`, `archive_command`, `archive_timeout` ซึ่งในกรณีนี้ถ้าเราใช้ คำสั่ง `nanp <file_name>` เราจะต้องเลี่ยนหาไกลมากนั้น ใช้  `vi <file_name>` จะดีกว่า
 
-หลังจากเรา เปิด `postgresql.conf` มาแล้ว
+หลังจากเรา เปิด `postgresql.conf` มาแล้ว (โปรดดูตามตัวอย่างด้านล่าง)
 - **Step 1**: พิม <kbd>/wal_level</kbd> เพื่อค้นหาและกด <kbd>[ENTER]</kbd> <kbd>[ENTER]</kbd> สองครั้ง กด <kbd>i</kbd> เพื่อเปิดการ Edit ของ vi แล้วลบ `#` ออก เพื่อให้ config นั้นถูกเปิดใช้งาน <kbd>[ESC]</kbd> เพื่อออกจากการ Edit
 
 - **Step 2**: พิม <kbd>/archive_mode</kbd> เพื่อค้นหาและกด <kbd>Enter</kbd> <kbd>[ENTER]</kbd> สองครั้ง กด <kbd>i</kbd> เพื่อเปิดการ Edit ของ vi แล้วลบ `#` ออก เพื่อให้ config นั้นถูกเปิดใช้งาน และเปลี่ยนค่า `archive_mode` จาก `off` เป็น `on` และกด <kbd>[ESC]</kbd> เพื่อออกจากการ Edit
@@ -60,8 +59,31 @@ archive_timeout = 60
 sudo systemctl restart postgresql@15-main.service
 ```
 
-### PITR
+
+# Manual Recovery Point-in-Time (PITR)
+
+ตามขั้นตอนดังต่อไปนี้จะเป็นการยกตัวอย่างการทำ Point in Time Recovery 
+
+โดย
+- สร้าง Database ชื่อ `test_db1` และ Table ชื่อ `test_table1` และ Insert ข้อมูลลงไป
+- สร้าง Database ชื่อ `test_db2` และ Table ชื่อ `test_table2` และ Insert ข้อมูลลงไป
+
+
+#### 1.Connect to PostgreSQL Server
+เปลี่ยน user unix เป็น user postgres
+```bash
 sudo su - postgres
+```
+
+จากนั้นให้เราพิมคำสั่ง `psql` เพื่อเข้าสู่ postgresql terminal
+```bash
+psql
+```
+(!) ตาม 2 ขั้นตอนด้านบนจะเป็นวิธีการเข้าสู่ postgresql terminal Database แบบไม่ต้องใส่รหัสผ่าน หรือการเข้าที่ เครื่องที่เป็น Database Server
+
+#### 2.Create Database and Table
+เมื่อเข้าสู่ postgresql terminal แล้ว ให้เราสร้าง database ชื่อ `test_db1` และสร้าง table ชื่อ `test_tbl1` และ insert ข้อมูลลงไป 10 แถว
+```sql
 create database test_db1;
 
 
