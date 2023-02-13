@@ -162,7 +162,7 @@ select count(1) from test_tbl1; /* 20  */
 
 
 >>>>>> <h1>Restore point</h1> ช่วงเวลาที่ 2
-ในส่วนนี้จะเป็นส่วนสำคัญเลย เพราะเราจะจดเวลาที่เราจะย้อนมาที่เวลานี้ ด้วยคำสั่ง `select now();`
+ในส่วนนี้จะเป็นส่วนสำคัญเลย เพราะเราจะจดเวลาที่เราจะย้อนมาที่เวลานี้ ด้วยคำสั่ง `select now();` เช่น หากเป็น `2023-02-12 15:04:30` เราจะได้เอาไปใส่ที่ `recovery_target_time = '2023-02-12 15:04:30'` ใน postgresql.conf ที่เราสำรองไว้ และเราจะได้เวลาที่เราจะย้อนกลับไป ที่เวลานี้ จาก Wal_log
 ```sql
 select now();
 -- /* restore point  2023-02-12 15:04:30 */
@@ -180,10 +180,10 @@ insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
 select count(1) from test_tbl1; /* 30 recoreds */
 ```
-
+<!-- 
 ```sql
 select now();  
-```
+``` -->
 
 ## **16:30:00** (ช่วง 4)
 
