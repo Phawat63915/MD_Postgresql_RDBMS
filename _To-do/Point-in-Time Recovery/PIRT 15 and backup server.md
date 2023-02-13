@@ -113,32 +113,45 @@ SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
 select count(1) from test_tbl1; - 10
 ```
 
-```sql
+<!-- ```sql
 select now();
 -- 2023-02-12 15:00:01.7 11004+00
-```
+``` -->
+
 Archive WAL ไว้ใน directory wal_archive
 ```sql psql function command PIRT
 SELECT pg_switch_wal();
 ```
 
-
-
-```bash
+<!-- ```bash
 rm -rf /var/lib/postgresql/basebackup/*
+``` -->
+
+กด `ctrl + d` เพื่อออกจาก postgresql terminal หรือ พิม `\q` เพื่อออกมาจาก postgresql terminal มายัง Unix terminal ที่เป็น user postgres
+```sql psql command
+\q
 ```
+จากนั้นพิม คำสั่งต่อไปนี้เพื่อทำการสำรองข้อมูลไป ยัง directory basebackup
 ```bash
 pg_basebackup -D /var/lib/postgresql/basebackup -Ft -P
 ```
-
 
 ## **15:30:00** (ช่วง 2)
 
 > **Note:** เพิ่มข้อมูล 10 แถว ดังนั้นข้อมูลทั้งหมดจะมี 20 แถว
 
+เข้าสู่ postgresql terminal 
+
+```bash
+psql
+```
+
+และเข้าสู่ฐานข้อมูลที่เราสร้างไว้ โดยใช้คำสั่ง `\c <database_name>` และใส่ชื่อฐานข้อมูลที่เราต้องการเข้าไป
+
 ```sql psql command
 \c test_db1;
 ```
+
 ```sql
 insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
