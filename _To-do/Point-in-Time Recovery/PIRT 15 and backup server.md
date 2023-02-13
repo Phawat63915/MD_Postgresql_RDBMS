@@ -1,113 +1,64 @@
 # Point-in-Time Recovery Postgres 15 and backup server
 
-```sh
-#backup server
-
-sudo apt update -y && sudo apt install samba -y && whereis samba
-
-mkdir <shere_folder>
-mkdir /root/wal_archive
-mkdir /root/basebackup
 
 
-#config fix shrer file
-sudo vi /etc/samba/smb.conf
+# Manual
+ในคู่มือนี้นี้เราจะทำการสำรองข้อมูล Postgres 15 และทำการ Restore ข้อมูลกลับมาในเวลาที่กำหนดไว้
+# Setup
 
-[wal_archive]
-    comment = Samba on Ubuntu
-    path = /root/wal_archive
-    read only = no
-    browsable = yes
+> **Note:** ส่วนของการติดตั้ง Postgres 15 และการตั้งค่าให้สามารถทำ Point-in-Time Recovery ได้
 
-[basebackup]
-    comment = Samba on Ubuntu
-    path = /root/basebackup
-    read only = no
-    browsable = yes
-
-sudo systemctl restart smbd.service
-sudo ufw allow samba
-
-sudo smbpasswd -a root
-
-#client
-
-for user in $(cat /etc/passwd | cut -f1 -d":"); do id $user; done
-
-sudo vi /etc/fstab
-
-//192.168.56.52/basebackup /var/lib/postgresql/basebackup cifs username=root,password=phawat,uid=114,gid=120,iocharset=utf8 0 0
-//192.168.56.52/wal_archive /var/lib/postgresql/wal_archive cifs username=root,password=phawat,uid=114,gid=120,iocharset=utf8 0 0
-
-#restart or apply fstab
-sudo mount -a
-
-
-
-# Install pg
-
-
-#Windoes logout smb
-Net use * /DELETE /YES
-
-sudo systemctl stop smbd.service
-sudo systemctl start smbd.service
-sudo systemctl status smbd.service
-
-# ---------------------------------------------------
-
-
-
+#### 1. Install Postgres 15
+ลงบนเครื่อง
+```bash
 sudo apt-cache search postgresql | grep postgresql && sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null && sudo apt update -y && sudo apt install -y postgresql && sudo systemctl enable postgresql && sudo systemctl start postgresql && systemctl status postgresql && psql --version
+```
 
-
+#### 2.สร้างโปเดอร์สำหรับที่จะเก็บข้อมูล backup และ wal archive
+โดยใช้คำสั่งด่านล่างนี้ path เราจะเป็น `/var/lib/postgresql`
+```
 sudo su - postgres
-mkdir basebackup 
-mkdir wal_archive
+```
+หลังจากเป็น user postgres แล้วให้ทำการสร้าง โฟเดอร์สำหรับที่จะเก็บข้อมูล backup และ wal archive และ ls เช็กดูว่า Folder เราถูกสร้างไหม และดูว่าตำแหน่งที่เราสร้าง Folder อยู่ที่ไหน
+```bash
+mkdir basebackup && mkdir wal_archive && ls && pwd
+```
+เน้นย้ำว่าต้องเป็น user postgres ที่สร้าง Folder นี้
+ออกจาก user postgres โดยใช้คำสั่ง
+```bash
+exit
+```
+เราจะกลับมาที่ user ที่เรา login เข้ามาในเครื่อง
 
 
-
-
+### 3.ตั้งค่าให้สามารถทำ Point-in-Time Recovery ได้
+```bash
 sudo vi /etc/postgresql/15/main/postgresql.conf
+```
+โดยหลังจากที่เรา เข้ามาที่ ไฟล์ config แล้วเราจะพบกับ config มากมาย แต่เราจะเลือก config ที่เราต้องการเปลี่ยนค่า โดยในที่นี้เราจะเปลี่ยนค่าในส่วนของ `wal_level`, `archive_mode`, `archive_command`, `archive_timeout` ซึ่งในกรณีนี้ถ้าเราใช้ คำสั่ง `nanp <file_name>` เราจะต้องเลี่ยนหาไกลมากนั้น ใช้  `vi <file_name>` จะดีกว่า
 
-#Wal_Level =replica or archive
+หลังจากเรา เปิด `postgresql.conf` มาแล้ว
+- **Step 1**: พิม <kbd>/wal_level</kbd> เพื่อค้นหาและกด <kbd>[ENTER]</kbd> <kbd>[ENTER]</kbd> สองครั้ง กด <kbd>i</kbd> เพื่อเปิดการ Edit ของ vi แล้วลบ `#` ออก เพื่อให้ config นั้นถูกเปิดใช้งาน <kbd>[ESC]</kbd> เพื่อออกจากการ Edit
+
+- **Step 2**: พิม <kbd>/archive_mode</kbd> เพื่อค้นหาและกด <kbd>Enter</kbd> <kbd>[ENTER]</kbd> สองครั้ง กด <kbd>i</kbd> เพื่อเปิดการ Edit ของ vi แล้วลบ `#` ออก เพื่อให้ config นั้นถูกเปิดใช้งาน และเปลี่ยนค่า `archive_mode` จาก `off` เป็น `on` และกด <kbd>[ESC]</kbd> เพื่อออกจากการ Edit
+
+- **Step 3**: พิม <kbd>/archive_command</kbd> เพื่อค้นหาและกด <kbd>[ENTER]</kbd> <kbd>[ENTER]</kbd> สองครั้ง กด <kbd>i</kbd> เพื่อเปิดการ Edit ของ vi แล้วลบ `#` ออก เพื่อให้ config นั้นถูกเปิดใช้งาน และเปลี่ยนค่า `archive_command` จาก ` ` เป็น `cp -i %p /var/lib/postgresql/wal_archive/%f` และกด <kbd>[ESC]</kbd> เพื่อออกจากการ Edit
+
+- **Step 4**: พิม <kbd>/archive_timeout</kbd>เพื่อค้นหาและกด <kbd>[ENTER]</kbd> <kbd>[ENTER]</kbd> สองครั้ง กด <kbd>i</kbd> เพื่อเปิดการ Edit ของ vi แล้วลบ `#` ออก เพื่อให้ config นั้นถูกเปิดใช้งาน และเปลี่ยนค่า `archive_timeout` จาก `0` เป็น `60` และกด <kbd>[ESC]</kbd> เพื่อออกจากการ Edit
+
+- **Step 5**: <kbd>[ESC]</kbd> แล้วพิม <kbd>:wq</kbd> เพื่อบันทึกและออกจาก vi
+
+```postgresql.conf
 wal_level = replica
 archive_mode=on
 archive_command =  'cp -i %p /var/lib/postgresql/wal_archive/%f'
 archive_timeout = 60
+```
 
+จากนั้นเราจะทำการ restart postgresql ใหม่ เพื่อให้ config ที่เราเปลี่ยนไป มีผลใช้งาน
+```bash
 sudo systemctl restart postgresql@15-main.service
-
-
-### Normal recovery
-
-
-sudo -u postgres psql -c "SELECT pg_switch_wal();"
-
-
-sudo -u postgres pg_basebackup -D /var/lib/postgresql/basebackup -Ft -z -P -Xs
-sudo -u postgres pg_basebackup -D /var/lib/postgresql/basebackup -Ft -P
-
-
-
-
-rm -rf /var/lib/postgresql/data/*
-sudo -u postgres mkdir /var/lib/postgresql/data/pg_wal
-
-
-#restoration :
-
-
-tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
-tar -xvf /var/lib/postgresql/basebackup/pg_wal.tar -C /var/lib/postgresql/15/main/pg_wal
-
-
-
-
-Restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p'
-
-
-
+```
 
 ### PITR
 sudo su - postgres
