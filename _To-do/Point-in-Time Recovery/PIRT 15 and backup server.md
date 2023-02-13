@@ -110,7 +110,7 @@ SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
 ```
 เราสามารถเช็คจำนวนข้อมูลที่เรา insert ลงไปได้ด้วยคำสั่ง `select count(1) from test_tbl1;`
 ```sql
-select count(1) from test_tbl1; - 10
+select count(1) from test_tbl1; /* 10  */
 ```
 
 <!-- ```sql
@@ -162,7 +162,7 @@ select count(1) from test_tbl1; /* 20  */
 
 
 >>>>>> <h1>Restore point</h1> ช่วงเวลาที่ 2
-ในส่วนนี้จะเป็นส่วนสำคัญเลย เพราะเราจะจดเวลาที่เราจะย้อนมาที่เวลานี้ ด้วยคำสั่ง `select now();` เช่น หากเป็น `2023-02-12 15:04:30` เราจะได้เอาไปใส่ที่ `recovery_target_time = '2023-02-12 15:04:30'` ใน postgresql.conf ที่เราสำรองไว้ และเราจะได้เวลาที่เราจะย้อนกลับไป ที่เวลานี้ จาก Wal_log
+ในส่วนนี้จะเป็นส่วนสำคัญเลย เพราะเราจะจดเวลาที่เราจะย้อนมาที่เวลานี้ ด้วยคำสั่ง `select now();` และจะได้ออกมาเป็นประมาณ `2023-02-12 15:04:30` เราจะได้เอาไปใส่ที่ `recovery_target_time = '2023-02-12 15:04:30'` ใน postgresql.conf เพื่อเอาไว้ให้ Wal_log เล่นถึงแค่เวลานี้
 ```sql
 select now();
 -- /* restore point  2023-02-12 15:04:30 */
@@ -185,7 +185,7 @@ select count(1) from test_tbl1; /* 30 recoreds */
 select now();  
 ``` -->
 
-## **16:30:00** (ช่วง 4)
+## **16:30:00** (ช่วง 4) Destroy Database
 
 > Note: เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
 
@@ -203,7 +203,7 @@ sudo su - postgres
 rm -rf /var/lib/postgresql/15/main/*
 ```
 
-## **23:00:00** (ช่วง 5)
+## **23:00:00** (ช่วง 5) Restore Database by using Full Backup + Archive WAL
 
 > Note: เราจะทำการ Restore Database กลับมาในช่วง 2 โดยใช้ข้อมูลที่เราได้ทำการ Full Backup ไว้ในช่วง 1 มาต่อ กัน กับ Wal_log ที่เราได้ทำการ Archive ไว้ในช่วง 1 มาต่อ กัน
 
