@@ -75,7 +75,7 @@ sudo systemctl restart postgresql@15-main.service
 ช่วงเวลาหลังจากฐานข้อมูลถูกทำลาย
 - **24:00:00** เราจะทำการกู้ข้อมูล โดยใช้ Point in Time Recovery ในช่วงเวลา 15:00:00 และ 15:30:00 และ 16:00:00 เราสามารถย้อนไปกู้ข้อมูลได้ ซึ่งในครั้งนี้เราเราจะย้อนไป เวลา 15:30:00 ซึ่งขณะนั้นข้อมูลเราจะกลับมาเป็น 20 แถว เป็นต้น (โดยเราจะเอา BackUp แบบ Full BackUp มาใช้รวมกับ WAL ที่เก็บไว้ใน directory wal_archive ในการกู้ข้อมูล)
 
-
+## **15:00:00**
 #### 1.Connect to PostgreSQL Server
 เปลี่ยน user Unix เป็น user postgres
 ```bash
@@ -87,22 +87,35 @@ sudo su - postgres
 psql
 ```
 (!) ตาม 2 ขั้นตอนด้านบนจะเป็นวิธีการเข้าสู่ postgresql terminal Database แบบไม่ต้องใส่รหัสผ่าน หรือการเข้าที่ เครื่องที่เป็น Database Server
-
 #### 2.Create Database and Table
 เมื่อเข้าสู่ postgresql terminal แล้ว ให้เราสร้าง database ชื่อ `test_db1` และสร้าง table ชื่อ `test_tbl1` และ insert ข้อมูลลงไป 10 แถว
 ```sql
 create database test_db1;
-
-
+```
+หลังจากสร้างฐานข้อมูลแล้ว ให้เราเข้าสู่ฐานข้อมูลที่เราสร้างไว้ โดยใช้คำสั่ง `\c` และใส่ชื่อฐานข้อมูลที่เราต้องการเข้าไป
+```sql psql command
 \c test_db1;
+```
+หลังจากเข้าสู่ฐานข้อมูลแล้ว ให้เราสร้าง table ชื่อ `test_tbl1` และ insert ข้อมูลลงไป 10 แถว
+```sql
 create table test_tbl1(id int,name varchar(255));
 insert into test_tbl1
 SELECT generate_series(1,10) AS id, md5(random()::text) AS descr;
+```
+เราสามารถเช็คจำนวนข้อมูลที่เรา insert ลงไปได้ด้วยคำสั่ง `select count(1) from test_tbl1;`
+```sql
 select count(1) from test_tbl1; - 10
-select now();
-SELECT pg_switch_wal();
+```
 
--- # 2023-02-12 15:00:01.7 11004+00
+```sql
+select now();
+-- 2023-02-12 15:00:01.7 11004+00
+```
+```sql psql function command PIRT
+SELECT pg_switch_wal();
+```
+
+
 
 
 rm -rf /var/lib/postgresql/basebackup/*
