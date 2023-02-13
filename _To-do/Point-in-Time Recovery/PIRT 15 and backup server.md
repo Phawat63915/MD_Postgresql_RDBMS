@@ -191,23 +191,31 @@ tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
 ```bash
 vi /var/lib/postgresql/15/main/recovery.signal 
 ```
+```
 restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p' 
 recovery_target_time = '2023-02-12 15:04:30' 
-
+```
+```bash
 sudo vi /etc/postgresql/15/main/postgresql.conf
+```
+```
 restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p' 
 recovery_target_time = '2023-02-12 15:04:30' 
+```
 
-
+```bash
 sudo systemctl start postgresql@15-main.service
 sudo systemctl stop postgresql@15-main.service
 sudo systemctl restart postgresql@15-main.service
-
+```
 <!-- recovery_target_time = '2021-09-23 11:03:25'  -->
 
-
+```
 select pg_wal_replay_resume();
-
+```
+```sql
 \c test_db1;
+```
+```sql
 select count(1) from test_tbl1; /* 20  */
 ```
