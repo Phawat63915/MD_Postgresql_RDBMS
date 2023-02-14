@@ -125,6 +125,9 @@ select now();
 ``` -->
 
 Archive WAL ไว้ใน directory wal_archive
+
+> **Note:** SELECT pg_switch_wal(); คือ function คำสั่งที่จะบังคับให้ PostgreSQL สร้าง WAL_LOG ขึ้นมาใหม่ หรือเปลี่ยนถ่าย **ซึ่งโดยปกติ: หากไม่มีกิจกรรมใดในฐานข้อมูลเช่น มีข้อมูลมาใหม่ หรือ มีการเพิ่มลบแก้ไขในฐานข้อมูล ไฟล์ WAL ใหม่จะไม่ถูกสร้างขึ้น**
+
 ```sql psql function command PIRT
 SELECT pg_switch_wal();
 ```
