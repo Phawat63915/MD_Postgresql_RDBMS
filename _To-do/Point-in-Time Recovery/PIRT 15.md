@@ -244,6 +244,7 @@ touch /var/lib/postgresql/15/main/recovery.signal
 ```bash
 sudo vi /etc/postgresql/15/main/postgresql.conf
 ```
+> **Tip:** หากต้องการ Restore ในทุกช่วงหรือเอาข้อมูลกลับมาทั้งหมดไม่ย้อนเวลา ให้คอทเม้นค่า `recovery_target_time` ออก โดยเพิ่ม `#` เป็น `#recovery_target_time = ''`
 ```conf
 restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p' 
 recovery_target_time = '2023-02-12 15:04:30' 
@@ -264,7 +265,9 @@ sudo systemctl start postgresql@15-main.service
 ```bash
 sudo su - postgres
 ```
-จากนั้นให้ตรวจสอบว่า ข้อมูลที่เราได้ทำการ Restore กลับมา มีข้อมูลทั้งหมด 20 หรือไม่ หรือ เป็นข้อมูลที่เราต้องการไหม
+จากนั้นให้ตรวจสอบว่า ข้อมูลที่เราได้ทำการ Restore กลับมา มีข้อมูลทั้งหมด 20 หรือไม่ หรือ เป็นข้อมูลที่เราต้องการไหม โดนทำตามขั้นตอนต่อไปนี้
+
+เข้าสู่ postgresql terminal โดยใช้ Unix Shell ที่เป็น user postgres และใช้คำสั่งต่อไปนี้
 ```sql psql command
 psql
 ```
