@@ -199,7 +199,7 @@ select now();
 
 > Note: เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
 
-หากเราเข้า `psql` อยู่ ให้ `\q` ออก จาก postgresql terminal ก่อนจะกลับมาที่ Unix Shell ที่เป็น user postgres
+หากเราเข้า `psql` อยู่ ให้ `\q` ออก จาก postgresql terminal ก่อน เพื่อจะกลับมาที่ Unix Shell ที่เป็น user postgres
 ```sql psql command
 \q
 ```
