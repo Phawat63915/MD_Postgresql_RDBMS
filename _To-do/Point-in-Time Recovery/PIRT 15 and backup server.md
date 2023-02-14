@@ -195,7 +195,7 @@ select now();
 
 > Note: เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
 
-ให้ exit ออก จาก Unix Shell ที่เป็น user postgres ก่อนหากทำมาต่อจากขั้นตอนด้านบน
+ให้ exit ออก จาก Unix Shell ที่เป็น user postgres ก่อนให้กลับ มาที่ Unix Shell ที่เป็น user root
 
 ```bash
 exit
