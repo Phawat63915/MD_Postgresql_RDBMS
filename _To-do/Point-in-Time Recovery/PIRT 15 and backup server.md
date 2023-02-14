@@ -194,7 +194,9 @@ select now();
 ## **16:30:00** (ช่วง 4) Destroy Database
 
 > Note: เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
+
 ให้ exit ออก จาก Unix Shell ที่เป็น user postgres ก่อนหากทำมาต่อจากขั้นตอนด้านบน
+
 ```bash
 exit
 ```
@@ -207,10 +209,12 @@ exit
 ```bash
 sudo systemctl stop postgresql@15-main.service
 ```
+
 เข้าสู่ postgresql terminal โดยใช้ Unix Shell ที่เป็น user postgres
 ```bash
 sudo su - postgres
 ```
+
 และลบข้อมูลทั้งหมดใน directory `/var/lib/postgresql/15/main/` ทั้งหมด
 ```bash
 rm -rf /var/lib/postgresql/15/main/*
