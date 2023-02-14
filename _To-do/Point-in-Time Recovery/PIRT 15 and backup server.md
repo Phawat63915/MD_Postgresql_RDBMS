@@ -34,6 +34,8 @@ exit
 ```bash
 sudo vi /etc/postgresql/15/main/postgresql.conf
 ```
+<details><summary>ดูวิธีการแก้ แบบ Step by Step postgresql.conf</summary>
+
 โดยหลังจากที่เรา เข้ามาที่ ไฟล์ config แล้วเราจะพบกับ config มากมาย แต่เราจะเลือก config ที่เราต้องการเปลี่ยนค่า โดยในที่นี้เราจะเปลี่ยนค่าในส่วนของ `wal_level`, `archive_mode`, `archive_command`, `archive_timeout` ซึ่งในกรณีนี้ถ้าเราใช้ คำสั่ง `nanp <file_name>` เราจะต้องเลี่ยนหาไกลมากนั้น ใช้  `vi <file_name>` จะดีกว่า
 
 หลังจากเรา เปิด `postgresql.conf` มาแล้ว (โปรดดูตามตัวอย่างด้านล่าง)
@@ -47,6 +49,10 @@ sudo vi /etc/postgresql/15/main/postgresql.conf
 
 - **Step 5**: <kbd>[ESC]</kbd> แล้วพิม <kbd>:wq</kbd> เพื่อบันทึกและออกจาก vi
 
+
+</details>
+
+เปลี่ยนค่า config ใน `postgresql.conf` ตามรายดังนี้
 ```postgresql.conf
 wal_level = replica
 archive_mode=on
