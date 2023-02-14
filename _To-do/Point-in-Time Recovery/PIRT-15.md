@@ -242,8 +242,12 @@ tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
 ```bash
 touch /var/lib/postgresql/15/main/recovery.signal 
 ```
+ให้ออกจาก Unix Shell ที่เป็น user postgres ก่อน และกลับมาที่ Unix Shell ที่เป็น user root
 
-แก้ไขไฟล์ `postgresql.conf` ที่ `/etc/postgresql/15/main/postgresql.conf` เปลี่ยนค่า 2 บรรทัด ดังนี้ `recovery_target_time = '<timestamp>'` เราจะใส่เป็นเวลา ที่เราได้พิม `select now();` ในช่วง 2 มาใส่
+```bash
+exit
+```
+แก้ไขไฟล์ `postgresql.conf` ที่ `/etc/postgresql/15/main/postgresql.conf` เปลี่ยนค่า 2 บรรทัด ดังนี้ `recovery_target_time = '<timestamp>'` เราจะใส่เป็นเวลา ที่เราได้พิม `select now();` ในช่วง 2 มาใส่ โดยเป็น Unix Shell ที่เป็น user root
 ```bash
 sudo vi /etc/postgresql/15/main/postgresql.conf
 ```
