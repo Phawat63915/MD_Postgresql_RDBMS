@@ -247,7 +247,7 @@ tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
 
 
 <!-- sudo su - postgres  -->
-สร้างไฟล์ `recovery.signal` ที่ `/var/lib/postgresql/15/main` เพื่อให้ postgresql อยู่ในโหลด Restore หรือรู็
+สร้างไฟล์ `recovery.signal` ที่ `/var/lib/postgresql/15/main` เพื่อให้ postgresql อยู่ใน Mode Restore หรือรู็
 ```bash
 touch /var/lib/postgresql/15/main/recovery.signal 
 ```
