@@ -7,13 +7,13 @@
 > **Note:** ส่วนของการติดตั้ง Postgres 15 และการตั้งค่าให้สามารถทำ Point-in-Time Recovery ได้
 ## Install Postgres 15 and Setup
 #### 1. Install Postgres 15
-ลงบนเครื่อง
+พิมคำสั่งต่อไปนี้ เพื่อ ติดตั้ง Postgres 15 Database Server ลงบนเครื่อง
 ```bash
 sudo apt-cache search postgresql | grep postgresql && sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' && wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null && sudo apt update -y && sudo apt install -y postgresql && sudo systemctl enable postgresql && sudo systemctl start postgresql && systemctl status postgresql && psql --version
 ```
 
 #### 2.สร้างโปเดอร์สำหรับที่จะเก็บข้อมูล backup และ wal archive
-โดยใช้คำสั่งด่านล่างนี้ path เราจะเป็น `/var/lib/postgresql`
+โดยใช้คำสั่งด่านล่างนี้ path เราจะเป็น `/var/lib/postgresql` หากพิม `pwd` เช็ก
 ```
 sudo su - postgres
 ```
@@ -21,13 +21,13 @@ sudo su - postgres
 ```bash
 mkdir basebackup && mkdir wal_archive && ls && pwd
 ```
-เน้นย้ำว่าต้องเป็น user postgres ที่สร้าง Folder นี้
+เน้นย้ำว่า Unix user ต้องเป็น postgres ที่สร้าง Folder นี้
 
-ออกจาก user postgres โดยใช้คำสั่ง
+ออกจาก Unix Shell user postgres โดยใช้คำสั่ง
 ```bash
 exit
 ```
-เราจะกลับมาที่ user ที่เรา login เข้ามาในเครื่อง
+เราจะกลับมาที่ Shell User ที่เรา Login เข้ามาในเครื่อง
 
 
 ### 3.ตั้งค่าให้สามารถทำ Point-in-Time Recovery ได้
@@ -133,7 +133,7 @@ SELECT pg_switch_wal();
 rm -rf /var/lib/postgresql/basebackup/*
 ``` -->
 
-กด `ctrl + d` เพื่อออกจาก postgresql terminal หรือ พิม `\q` เพื่อออกมาจาก postgresql terminal มายัง Unix terminal ที่เป็น user postgres
+กด `ctrl + d` เพื่อออกจาก postgresql terminal หรือ พิม `\q` เพื่อออกมาจาก postgresql terminal มายัง Unix Shell ที่เป็น user postgres
 ```sql psql command
 \q
 ```
