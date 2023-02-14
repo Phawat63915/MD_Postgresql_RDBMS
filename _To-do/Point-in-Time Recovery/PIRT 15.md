@@ -53,7 +53,7 @@ sudo vi /etc/postgresql/15/main/postgresql.conf
 </details>
 
 เปลี่ยนค่า config ใน `postgresql.conf` ตามรายดังนี้
-```postgresql.conf
+```conf
 wal_level = replica
 archive_mode=on
 archive_command =  'cp -i %p /var/lib/postgresql/wal_archive/%f'
@@ -224,10 +224,7 @@ rm -rf /var/lib/postgresql/15/main/*
 
 > Note: เราจะทำการ Restore Database กลับมาในช่วง 2 โดยใช้ข้อมูลที่เราได้ทำการ Full Backup ไว้ในช่วง 1 มาต่อ กัน กับ Wal_log ที่เราได้ทำการ Archive ไว้ในช่วง 1 มาต่อ กัน
 
-```bash
-mkdir /var/lib/postgresql/15/main/pg_wal
-```
-
+Restore แตกไฟล์ Full backup ข้อมูลที่เราได้ทำการ Backup ไว้ในช่วง 1 กลับมาที่ `/var/lib/postgresql/15/main/` (no need to restore wal file | ไม่ต้องแตกไฟล์ Wal_log ของ Full backup นี้) เพราะ เดียวเราจะเอา Wal_log มาต่อกัน
 ```bash
 tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
 ```
@@ -237,36 +234,51 @@ tar -xvf /var/lib/postgresql/basebackup/base.tar -C /var/lib/postgresql/15/main
 <!-- 2023-02-12 15:04:30 -->
 
 
-
 <!-- sudo su - postgres  -->
+สร้างไฟล์ `recovery.signal` ที่ `/var/lib/postgresql/15/main` เพื่อให้ postgresql อยู่ในโหลด Restore หรือรู็
 ```bash
-vi /var/lib/postgresql/15/main/recovery.signal 
+touch /var/lib/postgresql/15/main/recovery.signal 
 ```
-```
-restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p' 
-recovery_target_time = '2023-02-12 15:04:30' 
-```
+
+แก้ไขไฟล์ `postgresql.conf` ที่ `/etc/postgresql/15/main/postgresql.conf` เปลี่ยนค่า 2 บรรทัด ดังนี้ `recovery_target_time = '<timestamp>'` เราจะใส่เป็นเวลา ที่เราได้พิม `select now();` ในช่วง 2 มาใส่
 ```bash
 sudo vi /etc/postgresql/15/main/postgresql.conf
 ```
-```
+```conf
 restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p' 
 recovery_target_time = '2023-02-12 15:04:30' 
 ```
 
+ให้ออกจาก Unix Shell ที่เป็น user postgres ก่อน และกลับมาที่ Unix Shell ที่เป็น user root
+
+```bash
+exit
+```
+เพื่อพิมคำสั่ง start postgresql service หากไม่มีอะไรผิดพลาดจะสามารถรันได้ปกติ
 ```bash
 sudo systemctl start postgresql@15-main.service
-sudo systemctl stop postgresql@15-main.service
-sudo systemctl restart postgresql@15-main.service
 ```
 <!-- recovery_target_time = '2021-09-23 11:03:25'  -->
 
+ให้เข้าสู่ postgresql terminal โดยใช้ Unix Shell ที่เป็น user postgres
+```bash
+sudo su - postgres
 ```
-select pg_wal_replay_resume();
+จากนั้นให้ตรวจสอบว่า ข้อมูลที่เราได้ทำการ Restore กลับมา มีข้อมูลทั้งหมด 20 หรือไม่ หรือ เป็นข้อมูลที่เราต้องการไหม
+```sql psql command
+psql
 ```
+เข้าสู่ Database `test_db1` ก่อน
 ```sql
 \c test_db1;
 ```
+เช็กจำนวนข้อมูลทั้งหมดใน Table `test_tbl1` ว่ามีข้อมูลทั้งหมด 20 หรือไม่
 ```sql
 select count(1) from test_tbl1; /* 20  */
+```
+
+หากทุกอย่างถูกต้องแล้วให้พิมคำสั่งดังต่อไปนี้เพื่อ ยืนยันว่า โอเครแล้ว โดย postgresql จะกลับเข้าสู่โหมดการทำงาน ปกติ
+
+```sql
+select pg_wal_replay_resume();
 ```
