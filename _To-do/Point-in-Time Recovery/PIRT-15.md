@@ -194,9 +194,15 @@ select count(1) from test_tbl1; /* 30 recoreds */
 select now();  
 ``` -->
 
+
 ## **16:30:00** (ช่วง 4) Destroy Database
 
 > Note: เราจะทำการทำลายข้อมูลทั้งหมด หรือ ทำลาย Database
+
+หากเราเข้า `psql` อยู่ ให้ `\q` ออก จาก postgresql terminal ก่อนจะกลับมาที่ Unix Shell ที่เป็น user postgres
+```sql psql command
+\q
+```
 
 ให้ exit ออก จาก Unix Shell ที่เป็น user postgres ก่อนให้กลับ มาที่ Unix Shell ที่เป็น user root
 
