@@ -1,4 +1,4 @@
-# Point-in-Time Recovery Postgres 15 and backup server
+# Point-in-Time Recovery Postgres 15
 
 ในคู่มือนี้นี้เราจะทำการสำรองข้อมูล Postgres 15 และทำการ Restore ข้อมูลกลับมาในเวลาที่กำหนดไว้
 
