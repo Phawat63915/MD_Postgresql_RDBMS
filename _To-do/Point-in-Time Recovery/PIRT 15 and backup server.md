@@ -13,7 +13,7 @@ sudo apt-cache search postgresql | grep postgresql && sudo sh -c 'echo "deb http
 ```
 
 #### 2.สร้างโปเดอร์สำหรับที่จะเก็บข้อมูล backup และ wal archive
-โดยใช้คำสั่งด่านล่างนี้ path เราจะเป็น `/var/lib/postgresql` หากพิม `pwd` เช็ก
+โดยใช้คำสั่งด่านล่างนี้ path เราจะเป็น `/var/lib/postgresql` หากพิม `pwd` เพื่อตรวจสอบ path
 ```
 sudo su - postgres
 ```
