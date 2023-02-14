@@ -17,7 +17,10 @@ sudo apt-cache search postgresql | grep postgresql && sudo sh -c 'echo "deb http
 ```
 sudo su - postgres
 ```
-หลังจากเป็น user postgres แล้วให้ทำการสร้าง โฟเดอร์สำหรับที่จะเก็บข้อมูล backup และ wal archive และ ls เช็กดูว่า Folder เราถูกสร้างไหม และดูว่าตำแหน่งที่เราสร้าง Folder อยู่ที่ไหน
+หลังจากเป็น user postgres แล้วให้ทำการสร้าง โฟเดอร์สำหรับที่จะเก็บข้อมูล backup และ wal archive และ `ls` เช็กดูว่า Folder เราถูกสร้างไหม และ `pwd` เช็กว่าตำแหน่งที่เราสร้าง Folder อยู่ที่ไหน 
+
+> **Tip:** ซึ่งที่อยู่ทั้ง 2 คือ `var/lib/postgresql/basebackup` `/var/lib/postgresql/wal_archive` เราสามารถสร้างไว้ที่ใดก็ได้เพียงแค่ต้องถูกสร้างด้วย user postgres และต้องเป็น Folder ที่เป็น `Owner` และ `Group` ของ user postgres และต้องมี Permission ให้ user postgres สามารถเข้าถึงได้
+
 ```bash
 mkdir basebackup && mkdir wal_archive && ls && pwd
 ```
