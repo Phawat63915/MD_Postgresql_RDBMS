@@ -257,11 +257,6 @@ restore_command = 'cp /var/lib/postgresql/wal_archive/%f %p'
 recovery_target_time = '2023-02-12 15:04:30' 
 ```
 
-ให้ออกจาก Unix Shell ที่เป็น user postgres ก่อน และกลับมาที่ Unix Shell ที่เป็น user root
-
-```bash
-exit
-```
 เพื่อพิมคำสั่ง start postgresql service หากไม่มีอะไรผิดพลาดจะสามารถรันได้ปกติ
 ```bash
 sudo systemctl start postgresql@15-main.service
