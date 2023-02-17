@@ -6,3 +6,4 @@ Wiki
 
 To Do Manual
 - [Point-in-Time Recovery](https://github.com/Phawat63915/MD_Postgresql_RDBMS/tree/main/_To-do/Point-in-Time%20Recovery#introduction)
+- [Streaming(Hot Standby)](./_To-do/Streaming(Hot%20Standby)/README.md)
