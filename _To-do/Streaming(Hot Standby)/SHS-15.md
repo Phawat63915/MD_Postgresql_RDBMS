@@ -105,6 +105,14 @@ psql
 select * from pg_stat_replication;
 ```
 ### Standby (VM2) 192.168.56.52
+เปลี่ยน Unix Shell เป็น user postgres เพื่อพิมขั้นตอนถัดไป
+```bash
+sudo su - postgres
+```
+เข้า postgresql twminal ด้วย Unix Shell ด้วย user postgres
+```bash
+psql
+```
 ```
 select pg_is_in_recovery();
 ```
