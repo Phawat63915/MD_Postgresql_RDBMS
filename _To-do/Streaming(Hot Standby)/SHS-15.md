@@ -79,7 +79,9 @@ pg_basebackup -h 192.168.56.52 -U repl_mst -p 5432 -D /var/lib/postgresql/15/mai
 ```
 
 หลังจาก pg_basebackup สำเร็จแล้ว ให้เปลี่ยนเป็น Unix Shell ที่เป็น user root ก่อน เพื่อทำการ start postgresql service ใหม่
-
+```
+exit
+```
 ```
 sudo systemctl start postgresql@15-main.service
 ```
