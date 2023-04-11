@@ -90,6 +90,14 @@ sudo systemctl start postgresql@15-main.service
 # Validations | ทดสอบ
 
 ### Master (VM1) 192.168.56.51
+เปลี่ยน Unix Shell เป็น user postgres เพื่อพิมขั้นตอนถัดไป
+```bash
+sudo su - postgres
+```
+เข้า postgresql twminal ด้วย Unix Shell ด้วย user postgres
+```bash
+psql
+```
 ```
 \x
 ```
