@@ -52,25 +52,45 @@ psql
 create user repl_mst with replication encrypted password 'phawatsorratat';
 ```
 
-
+และพิมคสั่ง `\q` เพื่อออกจาก psql terminal
+```
+\q
+```
+ให้ออกจาก Unix Shell ที่เป็น user postgres ก่อน และกลับมาที่ Unix Shell ที่เป็น user root
+```
+exit
+```
 
 
 ### Slave Standby (VM2) 192.168.56.52
 
+หยุด postgresql service ก่อน เพื่อทำการสร้าง backup ของ master และนำมาใช้ใน slave ซึ่งต้องมีการแก้ไฟล์ data main ซึ่ง service postgresql มันอ่านอยู่ตลอดเวลา เพื่อห้สามารถทำได้อย่างไม่มีข้อผิดพลาด จึงต้องหยุด service ก่อน ใช้คำสั่งนี้ที่ Unix Shell ที่เป็น user root
+```
 sudo systemctl stop postgresql@15-main.service
+```
 
+เปลี่ยน Unix Shell เป็น user postgres เพื่อพิมขั้นตอนถัดไป
+```
 sudo su - postgres
-
+```
+ก่อนใช้ pg_basebackup เปลี่ยน เป็น user postgres ก่อน เพื่อที่ file owner จะได้เป็น postgres 
+```
 pg_basebackup -h 192.168.56.52 -U repl_mst -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R -C -S repl_slot
+```
 
+```
 sudo systemctl start postgresql@15-main.service
-
+```
 # Validations | ทดสอบ
 
 ### Master (VM1) 192.168.56.51
+```
 \x
-
+```
+```
 select * from pg_stat_replication;
-
+```
 ### Standby (VM2) 192.168.56.52
+```
 select pg_is_in_recovery();
+```
