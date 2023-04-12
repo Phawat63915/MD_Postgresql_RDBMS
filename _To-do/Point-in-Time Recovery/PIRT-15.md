@@ -207,6 +207,12 @@ select now();
 \q
 ```
 
+
+
+## **23:00:00** (ช่วง 5) Restore Database by using Full Backup + Archive WAL
+
+> Note: เราจะทำการ Restore Database กลับมาในช่วง 2 โดยใช้ข้อมูลที่เราได้ทำการ Full Backup ไว้ในช่วง 1 มาต่อ กัน กับ Wal_log ที่เราได้ทำการ Archive ไว้ในช่วง 1 มาต่อ กัน
+
 ให้ exit ออก จาก Unix Shell ที่เป็น user postgres ก่อนให้กลับ มาที่ Unix Shell ที่เป็น user root
 
 ```bash
@@ -231,10 +237,6 @@ sudo su - postgres
 ```bash
 rm -rf /var/lib/postgresql/15/main/*
 ```
-
-## **23:00:00** (ช่วง 5) Restore Database by using Full Backup + Archive WAL
-
-> Note: เราจะทำการ Restore Database กลับมาในช่วง 2 โดยใช้ข้อมูลที่เราได้ทำการ Full Backup ไว้ในช่วง 1 มาต่อ กัน กับ Wal_log ที่เราได้ทำการ Archive ไว้ในช่วง 1 มาต่อ กัน
 
 Restore แตกไฟล์ Full backup ข้อมูลที่เราได้ทำการ Backup ไว้ในช่วง 1 กลับมาที่ `/var/lib/postgresql/15/main/` (no need to restore wal file | ไม่ต้องแตกไฟล์ Wal_log ของ Full backup นี้) เพราะ เดียวเราจะเอา Wal_log มาต่อกัน
 ```bash
