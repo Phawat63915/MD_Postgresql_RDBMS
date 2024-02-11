@@ -13,3 +13,8 @@ To Do Manual
 
 - [Load PostgreSQL Sample Database](https://www.postgresqltutorial.com/postgresql-getting-started/load-postgresql-sample-database/)
 - [PostgreSQL Sample Database](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/)
+
+## Other but idle
+- https://www.postgresql.org/docs/current/datatype.html
+- https://www.postgresql.org/docs/current/datatype-numeric.html
+- https://www.postgresql.org/docs/current/datatype-money.html
