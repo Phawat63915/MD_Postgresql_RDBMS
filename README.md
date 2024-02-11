@@ -8,6 +8,8 @@ To Do Manual
 - [Point-in-Time Recovery](https://github.com/Phawat63915/MD_Postgresql_RDBMS/tree/main/_To-do/Point-in-Time%20Recovery#introduction)
 - [Streaming(Hot Standby)](./_To-do/Streaming(Hot%20Standby)/README.md)
 
-  Other
+##  Other
+- [PostgreSQL - How to configure PostgreSQL to accept all incoming connections](https://stackoverflow.com/questions/3278379/how-to-configure-postgresql-to-accept-all-incoming-connections)
 
-  https://stackoverflow.com/questions/3278379/how-to-configure-postgresql-to-accept-all-incoming-connections
+- [Load PostgreSQL Sample Database](https://www.postgresqltutorial.com/postgresql-getting-started/load-postgresql-sample-database/)
+- [PostgreSQL Sample Database](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/)
