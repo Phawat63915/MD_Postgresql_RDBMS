@@ -19,3 +19,6 @@ To Do Manual
 - https://www.postgresql.org/docs/current/datatype-numeric.html
 - https://www.postgresql.org/docs/current/datatype-money.html
 - https://www.postgresql.org/docs/current/dml-returning.html
+
+## NodeJS with PostgreSQL
+- https://codevoweb.com/node-postgresql-upload-resize-multiple-images/
